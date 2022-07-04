@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package example.car;
+
+option go_package = "github.com/thanders/dealership-inventory/proto";
+
+message Car {
+    uint32 id = 1;
+    bool is_manual = 2;
+    string manufacturer = 3;
+    string model = 4;
+    repeated int32 sample_lists = 5;
+}
+
+message Dealership {
+    
+}
