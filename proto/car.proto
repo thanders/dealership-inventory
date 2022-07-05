@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package example.car;
+package inventory;
 
 option go_package = "github.com/thanders/dealership-inventory/proto";
 
@@ -12,6 +12,20 @@ message Car {
     repeated int32 sample_lists = 5;
 }
 
+message Vehicles {
+    message Sedan {
+        repeated Car accord = 1;
+        repeated Car civic = 2;
+    }
+    message Suv {
+        repeated Car accord = 1;
+        repeated Car civic = 2;
+    }
+}
+
 message Dealership {
-    
+    string name = 1;
+    string address = 2;
+    repeated Car inventory = 3;
+    Vehicles.Sedan sedans = 4;
 }
