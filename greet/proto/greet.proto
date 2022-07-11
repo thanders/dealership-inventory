@@ -1,0 +1,108 @@
+syntax = "proto3";
+
+package greet;
+
+option go_package = "github.com/thanders/dealership-inventory/greet/proto";
+
+// GRPC Service Inputs types
+message GetAllDataRequest {
+    string firstName    = 1;
+}
+message GetDealerInventoryRequest {}
+message GetHondaInfoRequest {}
+
+// GRPC Response types
+message DealerInventory {
+    message DealerData {
+        string ASARanking =1;
+        string Address =2;
+        string City =3;
+        uint32 DealerDistanceMiles = 4;
+        string DealerNumber = 5;
+        uint32 DrivingDistanceMiles = 6;
+        string InternetManager = 7;
+        bool IsServiceCenter = 8;
+        uint32 Latitude = 9;
+        uint32 Longitude = 10;
+        string Name = 11;
+        string PartsHours = 12;
+        string PartsPhone = 13;
+        string Phone = 14;
+        repeated string SalesHours = 15;
+        string ServiceHours = 16;
+        string ServicePhone = 17;
+        string State = 18;
+        string WebAddress = 19;
+        string ZipCode = 20;
+        
+    }
+    message InventoryData {
+        string DHCost = 1;
+        string DealerNumber = 2;
+        string ModelYear = 3;
+        string ExteriorColor = 4;
+        string InteriorColor = 5;
+        string ModelGroupName = 6;
+        string Transmission = 7;
+        string ModelMSRP = 8;
+        uint32 NumberOnSite = 9;
+        uint32 NumberInTransit = 10;
+    }
+    bool IsValidZip = 1;
+    repeated DealerData Dealers = 2;
+    repeated InventoryData Inventory = 3;
+    string Vehiclemodelseriesname = 4;
+    string ZipCodeSent = 5;
+}
+
+message TotalInventory {
+    message Onsite {
+        string DHCost = 1;
+        string DealerNumber = 2;
+        string ModelYear = 3;
+        string ExteriorColor = 4;
+        string InteriorColor = 5;
+        string ModelGroupName = 6;
+        string Transmission = 7;
+        string ModelMSRP = 8;
+        uint32 NumberOnSite = 9;
+        uint32 NumberInTransit = 10;
+    }
+    message InTransit {
+        string DHCost = 1;
+        string DealerNumber = 2;
+        string ModelYear = 3;
+        string ExteriorColor = 4;
+        string InteriorColor = 5;
+        string ModelGroupName = 6;
+        string Transmission = 7;
+        string ModelMSRP = 8;
+        uint32 NumberOnSite = 9;
+        uint32 NumberInTransit = 10;
+    }
+    string ModelGroupName = 1;
+    uint32 TotalOnsite = 2;
+    uint32 TotalIncoming = 3;
+    string ZipCode = 4;
+    repeated Onsite OnSiteData = 5;
+    repeated InTransit InTransitData = 6;
+}
+
+message HondaVehicleInfo {
+    message VehicleModels {
+        string CardType = 1;
+        string ModelName = 2;
+        string ModelYear = 3;
+        string Msrp = 4;
+        string Mpg = 5;
+    }
+
+    repeated VehicleModels Models = 1;
+}
+
+// Define GRPC Services
+service HondaInventoryService {
+    rpc GetAllData (GetAllDataRequest) returns(DealerInventory);
+    rpc GetDealerInventory (GetDealerInventoryRequest) returns(TotalInventory);
+    rpc GetHondaInfo (GetHondaInfoRequest) returns(HondaVehicleInfo);
+}
