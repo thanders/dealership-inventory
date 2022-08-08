@@ -1,6 +1,8 @@
 BIN = dealership-inventory
 PROTO_DIR = proto
 
+REPOSITORY = github.com/thanders/dealership-inventory
+
 ifeq ($(OS), Windows_NT)
 	OS = windows
 	SHELL := powershell.exe
@@ -18,12 +20,15 @@ else
 	PACKAGE = $(shell head -1 go.mod | awk '{print $$2}')
 endif
 
-build: 	generate
-	go build -o ${BIN} .
+buildServer:
+	go build -o diServer ./di/server
 
-generate:
-	protoc -I${PROTO_DIR} --go_opt=module=${PACKAGE} --go_out=. ${PROTO_DIR}/*.proto
+buildClient:
+	go build -o diClient ./di/client
+
+generateServer:
+	protoc -Idi/proto --go_out=. --go_opt=module=${REPOSITORY} --go-grpc_out=. --go-grpc_opt=module=${REPOSITORY} di/proto/*.proto
 
 clean:
-	rm ${PROTO_DIR}/*.pb.go
+	rm di/${PROTO_DIR}/*.pb.go
 	rm ${BIN}
