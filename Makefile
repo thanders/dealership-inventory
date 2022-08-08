@@ -21,14 +21,16 @@ else
 endif
 
 buildServer:
-	go build -o diServer ./di/server
+	go build -o bin/server ./pkg/server
 
 buildClient:
-	go build -o diClient ./di/client
+	go build -o bin/client ./pkg/client
 
 generateServer:
-	protoc -Idi/proto --go_out=. --go_opt=module=${REPOSITORY} --go-grpc_out=. --go-grpc_opt=module=${REPOSITORY} di/proto/*.proto
+	protoc -Ipkg/proto --go_out=. --go_opt=module=${REPOSITORY} --go-grpc_out=. --go-grpc_opt=module=${REPOSITORY} pkg/proto/*.proto
 
 clean:
-	rm di/${PROTO_DIR}/*.pb.go
-	rm ${BIN}
+	-rm pkg/${PROTO_DIR}/*.pb.go
+	-rm bin/client
+	-rm bin/server
+	-rm build/*.snap

@@ -3,3 +3,6 @@ dealership-inventory
 
 # Greet Server Binary
 greetServer
+
+# Snapcraft build files
+*.snap
